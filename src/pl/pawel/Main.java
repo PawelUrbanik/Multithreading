@@ -1,5 +1,7 @@
 package pl.pawel;
 
+import java.util.stream.IntStream;
+
 public class Main {
 
 
@@ -21,8 +23,20 @@ public class Main {
 //                System.out.println(" | Wykonywany wątek " + Thread.currentThread().getName());
 //            }
 //        };
+
+        Runnable runnable2 = () ->{
+                        IntStream.rangeClosed(1,20).forEach(i -> {
+                            System.out.println(i+" | Wykonywany wątek " + Thread.currentThread().getName());
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        });
+        };
+
         //Lambda expression
-        Thread thread1 = new Thread(() -> System.out.println(" | Wykonywany wątek " + Thread.currentThread().getName()), "My runnable anonymous");
+        Thread thread1 = new Thread(runnable2, "My runnable anonymous");
         thread1.start();
     }
 }
