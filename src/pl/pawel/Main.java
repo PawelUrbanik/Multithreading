@@ -6,16 +6,14 @@ public class Main {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println("Główny wątek: " + Thread.currentThread().getName());
         Thread myThread = new MyThread("My thread");
         Thread secondThread = new MyThread("My thread 2");
-        myThread.start();
-        secondThread.start();
+
 
         Runnable runnable = new MyRunnable();
         Thread thread = new Thread(runnable, "My runnable");
-        thread.start();
 
 //        Runnable runnable2 = new Runnable() {
 //            @Override
@@ -25,7 +23,7 @@ public class Main {
 //        };
 
         Runnable runnable2 = () ->{
-                        IntStream.rangeClosed(1,20).forEach(i -> {
+                        IntStream.rangeClosed(1,5).forEach(i -> {
                             System.out.println(i+" | Wykonywany wątek " + Thread.currentThread().getName());
                             try {
                                 Thread.sleep(1000);
@@ -38,5 +36,10 @@ public class Main {
         //Lambda expression
         Thread thread1 = new Thread(runnable2, "My runnable anonymous");
         thread1.start();
+        thread1.join();
+        thread.start();
+        myThread.start();
+        secondThread.start();
+
     }
 }
