@@ -14,7 +14,7 @@ public class Race {
             executorService.submit(()-> counter.incerase());
         }
 
-        executorService.awaitTermination(7, TimeUnit.SECONDS);
+        executorService.awaitTermination(3, TimeUnit.SECONDS);
         executorService.shutdown();
 
         System.out.println(counter.getCount());
@@ -26,8 +26,13 @@ public class Race {
 class Counter{
     private int count;
 
+    //or synchronized public void increase()
     public void incerase(){
-        count = count +1;
+
+        synchronized (this)
+        {
+            count = count +1;
+        }
     }
 
     public int getCount() {
