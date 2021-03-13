@@ -3,6 +3,7 @@ package pl.pawel.racecondition;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Race {
 
@@ -24,18 +25,13 @@ public class Race {
 }
 
 class Counter{
-    private int count;
+    private AtomicInteger count = new AtomicInteger(0);
 
-    //or synchronized public void increase()
     public void incerase(){
-
-        synchronized (this)
-        {
-            count = count +1;
-        }
+        count.incrementAndGet();
     }
 
     public int getCount() {
-        return count;
+        return count.get();
     }
 }
